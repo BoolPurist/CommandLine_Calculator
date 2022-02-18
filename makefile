@@ -8,7 +8,7 @@ BIN=bin/
 
 OBJS=$(OBJ)main.o $(OBJ)process.o
 
-ARGS=he,ll,o wo,rl.d,
+ARGS=25 45
 
 .PHONY: all
 
