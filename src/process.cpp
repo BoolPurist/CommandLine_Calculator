@@ -49,8 +49,7 @@ std::vector<double> create_numbers_from(std::vector<std::string>& toCreateFrom)
         {
             std::cout << "value (" << toCreateFrom.at(i) << ") is not number" << std::endl;
             throw exception;
-        }
-                
+        }        
     }
 
     return createdNumbers;

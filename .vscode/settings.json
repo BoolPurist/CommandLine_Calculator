@@ -45,5 +45,8 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "set": "cpp"
-    }
+    },
+    "cSpell.words": [
+        "agrv"
+    ]
 }
