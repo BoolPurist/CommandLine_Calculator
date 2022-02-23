@@ -5,6 +5,8 @@ CCF=-Wall -I$(INC)
 OBJ=obj/
 SRC=src/
 BIN=bin/
+EX=$(BIN)main.out
+NAME:=command_line_caculator.bin
 
 MAIN:=$(OBJ)main.o
 PROC:=$(OBJ)process.o
@@ -16,9 +18,11 @@ ARGS=min 1 3 3 6 7 8 9
 ARGS2=  median 4.78 2.5 5.45
 ARGSN:=
 
-.PHONY: all
+.PHONY: build
 
-$(BIN)main.out: $(OBJS)
+build: $(EX)
+
+$(EX): $(OBJS)
 	$(CC) $(CCF) $^ -o $@
 
 $(MAIN): $(SRC)main.cpp $(INC)/process.hpp $(INC)/math_utility.hpp
@@ -34,4 +38,12 @@ $(HELP): $(SRC)help.cpp $(INC)/help.hpp
 	$(CC) $(CCF) -c $< -o $@
 
 run:
-	$(BIN)main.out $(ARGS2)
+	$(EX) $(ARGS2)
+
+deploy: build serve
+
+clear:
+	rm $(EX) $(OBJS)
+
+serve:
+	cp $(EX) $(NAME)
