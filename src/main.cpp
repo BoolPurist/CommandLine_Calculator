@@ -57,6 +57,7 @@ int main(int argc, char** argv)
         return 0;
     }
 
+    // Removes command so only the given numbers are contained.
     arguments.erase(arguments.begin());
   }
   

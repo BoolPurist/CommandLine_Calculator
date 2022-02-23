@@ -6,10 +6,14 @@ OBJ=obj/
 SRC=src/
 BIN=bin/
 
-OBJS=$(OBJ)main.o $(OBJ)process.o $(OBJ)math_utility.o $(OBJ)help.o
+MAIN:=$(OBJ)main.o
+PROC:=$(OBJ)process.o
+MATH:=$(OBJ)math_utility.o
+HELP:=$(OBJ)help.o
+OBJS=$(MAIN) $(PROC) $(MATH) $(HELP)
 
 ARGS=min 1 3 3 6 7 8 9
-ARGS2=  median    1 2 3 4 5 6 8 9
+ARGS2=  median 4.78 2.5 5.45
 ARGSN:=
 
 .PHONY: all
@@ -17,17 +21,17 @@ ARGSN:=
 $(BIN)main.out: $(OBJS)
 	$(CC) $(CCF) $^ -o $@
 
-$(OBJ)main.o: $(SRC)main.cpp $(INC)/process.hpp $(INC)/math_utility.hpp
+$(MAIN): $(SRC)main.cpp $(INC)/process.hpp $(INC)/math_utility.hpp
 	$(CC) $(CCF) -c $< -o $@
 
-$(OBJ)process.o: $(SRC)process.cpp $(INC)/process.hpp
+$(PROC): $(SRC)process.cpp $(INC)/process.hpp
 	$(CC) $(CCF) -c $< -o $@
 
-$(OBJ)math_utility.o: $(SRC)math_utility.cpp $(INC)/math_utility.hpp
+$(MATH): $(SRC)math_utility.cpp $(INC)/math_utility.hpp
 	$(CC) $(CCF) -c $< -o $@
 
-$(OBJ)help.o: $(SRC)help.cpp $(INC)/help.hpp
+$(HELP): $(SRC)help.cpp $(INC)/help.hpp
 	$(CC) $(CCF) -c $< -o $@
 
 run:
-	$(BIN)main.out $(ARGS)
+	$(BIN)main.out $(ARGS2)
