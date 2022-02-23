@@ -8,9 +8,9 @@ BIN=bin/
 
 OBJS=$(OBJ)main.o $(OBJ)process.o $(OBJ)math_utility.o $(OBJ)help.o
 
-ARGS=1 3 3 6 7 8 9
-ARGS2=median 1 2 3 4 5 6 8 9
-ARGSN:=median
+ARGS=min 1 3 3 6 7 8 9
+ARGS2=  median    1 2 3 4 5 6 8 9
+ARGSN:=
 
 .PHONY: all
 
@@ -30,4 +30,4 @@ $(OBJ)help.o: $(SRC)help.cpp $(INC)/help.hpp
 	$(CC) $(CCF) -c $< -o $@
 
 run:
-	$(BIN)main.out $(ARGSN)
+	$(BIN)main.out $(ARGS)

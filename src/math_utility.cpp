@@ -2,91 +2,94 @@
 #include <iostream>
 #include <algorithm>
 
-double calc_sum(const std::vector<double>& toCalculateFrom)
+namespace math_utility
 {
+  
+  double calc_sum(const std::vector<double>& toCalculateFrom)
+  {
     double total_sum{0.0};
 
     for (const auto& number : toCalculateFrom)
     {
-        total_sum += number;
+      total_sum += number;
     }
 
     return total_sum;
-}
+  }
 
-double calc_avg(const std::vector<double>& toCalculateFrom)
-{
+  double calc_avg(const std::vector<double>& toCalculateFrom)
+  {
     double average{0.0};
 
     for (const auto& number : toCalculateFrom)
     {
-        average += number;
+      average += number;
     }
     
     double divider = static_cast<double>(toCalculateFrom.size());
     return average / divider;
-}
+  }
 
-double calc_mult(const std::vector<double>& toCalculateFrom)
-{
+  double calc_mult(const std::vector<double>& toCalculateFrom)
+  {
     if (toCalculateFrom.size() == 0)
     {
-        return 0.0;
+      return 0.0;
     }
 
     double product{1.0};
 
     for (const auto& number : toCalculateFrom)
     {
-        product *= number;
+      product *= number;
     }
     
     return product;
-}
+  }
 
-double calc_min(const std::vector<double>& toCalculateFrom)
-{
+  double calc_min(const std::vector<double>& toCalculateFrom)
+  {
     if (toCalculateFrom.size() == 0)
     {
-        return 0.0;
+      return 0.0;
     }
 
     double min{toCalculateFrom.at(0)};
 
     for (const auto& number : toCalculateFrom)
     {
-        min = std::min(number, min);
+      min = std::min(number, min);
     }
     
     return min;
-}
+  }
 
-double calc_max(const std::vector<double>& toCalculateFrom)
-{
+  double calc_max(const std::vector<double>& toCalculateFrom)
+  {
     if (toCalculateFrom.size() == 0)
     {
-        return 0.0;
+      return 0.0;
     }
 
     double max{toCalculateFrom.at(0)};
 
     for (const auto& number : toCalculateFrom)
     {
-        max = std::max(number, max);
+      max = std::max(number, max);
     }
     
     return max;
-}
+  }
 
-std::vector<double> create_sorted_sequence(const std::vector<double>& toBeCopied)
-{
+  std::vector<double> create_sorted_sequence(const std::vector<double>& toBeCopied)
+  {
     auto toBeSorted = toBeCopied;
     std::sort(toBeSorted.begin(), toBeSorted.end());
     return toBeSorted;
-}
+  }
 
-double get_median_from(const std::vector<double>& toExtractMedianFrom)
-{
+  double get_median_from(const std::vector<double>& toExtractMedianFrom)
+  {
     std::vector<double> sorted = create_sorted_sequence(toExtractMedianFrom);
     
     int size = sorted.size();
@@ -97,11 +100,14 @@ double get_median_from(const std::vector<double>& toExtractMedianFrom)
 
     if (!isSizeOdd)
     {
-        return middleValue;
+      return middleValue;
     }
     else 
-    {        
-        double bottomMiddle = sorted.at(middleIndex - 1);
-        return (middleValue + bottomMiddle) / 2;
+    {
+      double bottomMiddle = sorted.at(middleIndex - 1);
+      return (middleValue + bottomMiddle) / 2;
     }
+  }
+
 }
+

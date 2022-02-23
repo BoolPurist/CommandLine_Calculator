@@ -1,14 +1,16 @@
 #include <iostream>
 #include "help.hpp"
 
-void print_help()
+namespace help
 {
+  void print_help()
+  {
     const char* help_message = R"(
         Takes numbers and calculates a result according to given command.
         
         Note: command can be given as in line arguments or 
         via interactive mode. If no in line arguments or no numbers are given,
-         then the interactive mode is started.
+            then the interactive mode is started.
 
         Syntax:
         <command> <number> <number> ... <number>
@@ -29,4 +31,5 @@ void print_help()
     )";
 
     std::cout << help_message << std::endl;
+  }
 }

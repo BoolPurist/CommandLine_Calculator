@@ -7,16 +7,23 @@
 
 #include "process.hpp"
 
-std::vector<std::string> create_from_arguments(const int& argc, char** argv)
+namespace
 {
+  bool is_command(const std::string& givenCommand, const std::string& wantedCommand);
+}
+
+namespace process
+{
+  std::vector<std::string> create_from_arguments(const int& argc, char** argv)
+  {
     std::vector<std::string> extracted_arguments{};
     // argv + 1 strips name program from names.
     extracted_arguments.assign(argv + 1, argv + argc);
     return extracted_arguments;
-}
+  }
 
-void convert_comma_to_point(std::vector<std::string>& toConvert)
-{
+  void convert_comma_to_point(std::vector<std::string>& toConvert)
+  {
     for (auto& nextToConvert: toConvert)
     {
         int found_i {-1};
@@ -37,10 +44,10 @@ void convert_comma_to_point(std::vector<std::string>& toConvert)
 
         } while(next_i != count);
     }
-}
+  }
 
-std::vector<double> create_numbers_from(std::vector<std::string>& toCreateFrom)
-{
+  std::vector<double> create_numbers_from(std::vector<std::string>& toCreateFrom)
+  {
     std::vector<double> createdNumbers(toCreateFrom.size(), 0.0);
     for(size_t i = 0; i < toCreateFrom.size(); i++)
     {
@@ -59,53 +66,53 @@ std::vector<double> create_numbers_from(std::vector<std::string>& toCreateFrom)
     }
 
     return createdNumbers;
-}
+  }
 
-void process_arguments_and_print_result(const std::string& command, const std::vector<double>& numbers)
-{
+  void process_arguments_and_print_result(const std::string& command, const std::vector<double>& numbers)
+  {
     if (is_command(command, "sum"))
     {
-        double result = calc_sum(numbers);
-        print_result("Sum: ", result);
+      double result = math_utility::calc_sum(numbers);
+      print_result("Sum: ", result);
     }
     else if (is_command(command, "product"))
     {
-        double result = calc_mult(numbers);
-        print_result("Product: ", result);
+      double result = math_utility::calc_mult(numbers);
+      print_result("Product: ", result);
     }
     else if (is_command(command, "min"))
     {
-        double result = calc_min(numbers);
-        print_result("Minimum: ", result);
+      double result = math_utility::calc_min(numbers);
+      print_result("Minimum: ", result);
     }
     else if (is_command(command, "max"))
     {
-        double result = calc_min(numbers);
-        print_result("Maximum: ", result);
+      double result = math_utility::calc_min(numbers);
+      print_result("Maximum: ", result);
     }
     else if (is_command(command, "sort"))
     {
-        std::vector<double> sortedSequence = create_sorted_sequence(numbers);
-        print_sequence_onLine("Sorted Sequence: ", sortedSequence);
+      std::vector<double> sortedSequence = math_utility::create_sorted_sequence(numbers);
+      print_sequence_onLine("Sorted Sequence: ", sortedSequence);
     }
     else if (is_command(command, "median"))
     {
-        double result = get_median_from(numbers);
-        print_result("Median: ", result);
+      double result = math_utility::get_median_from(numbers);
+      print_result("Median: ", result);
     }
     else if (is_command(command, "average"))
     {
-        double result = calc_avg(numbers);
-        print_result("Average: ", result);
+      double result = math_utility::calc_avg(numbers);
+      print_result("Average: ", result);
     }
     else if (is_command(command, "size"))
     {
-        int result = numbers.size();
-        print_result("Size: ", result);
+      int result = numbers.size();
+      print_result("Size: ", result);
     }
     else 
     {
-        std::cout << "Command (" << command << ") is not supported" << std::endl;
+      std::cout << "Command (" << command << ") is not supported" << std::endl;
     }
 }
 
@@ -126,15 +133,48 @@ void print_sequence_onLine(const std::string& message, const std::vector<double>
     std::cout << std::endl;
 }
 
-bool is_command(const std::string& givenCommand, const std::string& wantedCommand)
+std::string trim_spaces_left_right(const std::string& toTrim)
 {
-    return givenCommand.compare(wantedCommand) == 0;
-}
+    std::string result{toTrim};
+    
+    if (result.size() == 0)
+    {
+        return result;
+    }
 
+    // left trimming
 
-bool requests_help(const std::string& givenCommand)
-{
+    while(std::isspace(result.at(0)))
+    {
+        result.erase(0, 1);
+    }
+
+    // right trimming
+
+    int lastIndex = result.size() - 1;
+    while(std::isspace(result.at(lastIndex)))
+    {
+        result.erase(lastIndex, 1);
+        lastIndex = result.size() - 1;
+    }
+
+    return result;
+  }
+
+  bool requests_help(const std::string& givenCommand)
+  {
     return is_command(givenCommand, "help") ||
             is_command(givenCommand, "-h") ||
             is_command(givenCommand, "--help");
+  }
+
 }
+
+namespace
+{
+  bool is_command(const std::string& givenCommand, const std::string& wantedCommand)
+  {
+    return givenCommand.compare(wantedCommand) == 0;
+  }
+}
+
