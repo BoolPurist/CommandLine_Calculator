@@ -77,7 +77,10 @@ double calc_max(const std::vector<double>& toCalculateFrom)
     return max;
 }
 
-void sort_sequence(std::vector<double>& toCalculateFrom)
+std::vector<double> create_sorted_sequence(std::vector<double>& toBeCopied)
 {
-    std::sort(toCalculateFrom.begin(), toCalculateFrom.end());
+    auto toBeSorted = toBeCopied;
+    std::sort(toBeSorted.begin(), toBeSorted.end());
+    return toBeSorted;
 }
+

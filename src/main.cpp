@@ -27,7 +27,7 @@ void assert_math(std::vector<double>& input)
     double product = calc_mult(input);
     double min = calc_min(input);
     double max = calc_max(input);
-    sort_sequence(input);
+    auto sorted = create_sorted_sequence(input);
 
     print_result("Sum: ", sum);
     print_result("Average: ", average);
@@ -37,7 +37,7 @@ void assert_math(std::vector<double>& input)
 
     std::cout << "Sorted" << std::endl;
 
-    for (const auto& argument: input)
+    for (const auto& argument: sorted)
     {
         std::cout << argument << std::endl;
     }
