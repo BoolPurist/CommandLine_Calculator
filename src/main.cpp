@@ -1,49 +1,70 @@
 #include <iostream>
+#include <sstream>
 
 #include "process.hpp"
 #include "math_utility.hpp"
-
-void assert_math(std::vector<double>& input);
-void print_result(const char* message, double result);
-
+#include "help.hpp"
 
 int main(int argc, char** argv)
 {
-    auto result = create_from_arguments(argc, argv);
-    convert_comma_to_point(result);
-    std::vector<double> numbers = create_numbers_from(result);
-    assert_math(numbers);
-    
-    // for (const auto& argument: numbers)
-    // {
-    //     std::cout << argument << std::endl;
-    // }
-}
+    bool noUserInLineArguments = argc < 3;
 
-void assert_math(std::vector<double>& input)
-{    
-    double sum = calc_sum(input);
-    double average = calc_avg(input);
-    double product = calc_mult(input);
-    double min = calc_min(input);
-    double max = calc_max(input);
-    auto sorted = create_sorted_sequence(input);
+    std::string enteredCommand{};
+    std::vector<std::string> arguments{};
 
-    print_result("Sum: ", sum);
-    print_result("Average: ", average);
-    print_result("Product: ", product);
-    print_result("Min: ", min);
-    print_result("Max: ", max);
-
-    std::cout << "Sorted" << std::endl;
-
-    for (const auto& argument: sorted)
+    if (noUserInLineArguments)
     {
-        std::cout << argument << std::endl;
-    }
-}
+        std::cout << "Entering interactive mode" << std::endl;
+        // User is asked to provide input in an interactive mode.
+        std::cout << "Enter the command:" << std::endl;
+        std::getline(std::cin, enteredCommand);
 
-void print_result(const char* message, double result)
-{
-    std::cout << message << result << std::endl;
+        if (requests_help(enteredCommand))
+        {
+            print_help();
+            return 0;
+        }
+
+        std::cout << "Enter the numbers:" << std::endl;
+        std::string lineOfNumbers{};
+        std::getline(std::cin, lineOfNumbers);
+
+        std::istringstream toBeSplitted{std::move(lineOfNumbers)};
+
+        std::string oneNumber{};
+        
+        // Split line of numbers by space.
+        while(std::getline(toBeSplitted, oneNumber, ' '))
+        {
+            bool isEmptyToken = oneNumber.compare("") == 0;
+            if (!isEmptyToken)
+            {
+                arguments.push_back(oneNumber);
+            }
+        }
+    }    
+    else
+    {
+
+        // In line arguments are parsed
+        arguments = create_from_arguments(argc, argv);
+        enteredCommand = arguments.front();
+
+        if (requests_help(enteredCommand))
+        {
+            print_help();
+            return 0;
+        }
+
+        arguments.erase(arguments.begin());
+    }
+    
+    
+    // Numbers are processed according to a given valid command.
+    convert_comma_to_point(arguments);
+    std::vector<double> parsedNumbers = create_numbers_from(arguments);
+
+    process_arguments_and_print_result(enteredCommand, parsedNumbers);    
+
+    return 0;
 }

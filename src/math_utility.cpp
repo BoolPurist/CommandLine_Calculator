@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 #include <algorithm>
 
 double calc_sum(const std::vector<double>& toCalculateFrom)
@@ -77,10 +78,30 @@ double calc_max(const std::vector<double>& toCalculateFrom)
     return max;
 }
 
-std::vector<double> create_sorted_sequence(std::vector<double>& toBeCopied)
+std::vector<double> create_sorted_sequence(const std::vector<double>& toBeCopied)
 {
     auto toBeSorted = toBeCopied;
     std::sort(toBeSorted.begin(), toBeSorted.end());
     return toBeSorted;
 }
 
+double get_median_from(const std::vector<double>& toExtractMedianFrom)
+{
+    std::vector<double> sorted = create_sorted_sequence(toExtractMedianFrom);
+    
+    int size = sorted.size();
+    bool isSizeOdd = size % 2 == 0;
+
+    int middleIndex = size / 2;
+    int middleValue = sorted.at(middleIndex);
+
+    if (!isSizeOdd)
+    {
+        return middleValue;
+    }
+    else 
+    {        
+        double bottomMiddle = sorted.at(middleIndex - 1);
+        return (middleValue + bottomMiddle) / 2;
+    }
+}

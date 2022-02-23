@@ -1,5 +1,10 @@
 #include <iostream>
 #include <set>
+#include <string>
+
+#include "math_utility.hpp"
+#include "help.hpp"
+
 #include "process.hpp"
 
 std::vector<std::string> create_from_arguments(const int& argc, char** argv)
@@ -29,6 +34,7 @@ void convert_comma_to_point(std::vector<std::string>& toConvert)
 
             nextToConvert.replace(found_i, 1, ".");
             next_i = found_i + 1;
+
         } while(next_i != count);
     }
 }
@@ -53,4 +59,82 @@ std::vector<double> create_numbers_from(std::vector<std::string>& toCreateFrom)
     }
 
     return createdNumbers;
+}
+
+void process_arguments_and_print_result(const std::string& command, const std::vector<double>& numbers)
+{
+    if (is_command(command, "sum"))
+    {
+        double result = calc_sum(numbers);
+        print_result("Sum: ", result);
+    }
+    else if (is_command(command, "product"))
+    {
+        double result = calc_mult(numbers);
+        print_result("Product: ", result);
+    }
+    else if (is_command(command, "min"))
+    {
+        double result = calc_min(numbers);
+        print_result("Minimum: ", result);
+    }
+    else if (is_command(command, "max"))
+    {
+        double result = calc_min(numbers);
+        print_result("Maximum: ", result);
+    }
+    else if (is_command(command, "sort"))
+    {
+        std::vector<double> sortedSequence = create_sorted_sequence(numbers);
+        print_sequence_onLine("Sorted Sequence: ", sortedSequence);
+    }
+    else if (is_command(command, "median"))
+    {
+        double result = get_median_from(numbers);
+        print_result("Median: ", result);
+    }
+    else if (is_command(command, "average"))
+    {
+        double result = calc_avg(numbers);
+        print_result("Average: ", result);
+    }
+    else if (is_command(command, "size"))
+    {
+        int result = numbers.size();
+        print_result("Size: ", result);
+    }
+    else 
+    {
+        std::cout << "Command (" << command << ") is not supported" << std::endl;
+    }
+}
+
+void print_result(const std::string& message, double result)
+{
+    std::cout << message << result << std::endl;
+}
+
+void print_sequence_onLine(const std::string& message, const std::vector<double> sequence)
+{
+    std::cout << message << std::endl;
+
+    for (const auto& element : sequence)
+    {
+        std::cout << element << " ";
+    }
+
+    std::cout << std::endl;
+}
+
+bool is_command(const std::string& givenCommand, const std::string& wantedCommand)
+{
+    return givenCommand.compare(wantedCommand) == 0;
+}
+
+
+bool requests_help(const std::string& givenCommand)
+{
+    return is_command(givenCommand, "help") ||
+            is_command(givenCommand, "-h") ||
+            is_command(givenCommand, "--help");
 }

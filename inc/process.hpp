@@ -13,4 +13,10 @@ void convert_comma_to_point(std::vector<std::string>& toConvert);
 /// which is not convertible to a number
 std::vector<double> create_numbers_from(std::vector<std::string>& toCreateFrom);
 
+void process_arguments_and_print_result(const std::string& command, const std::vector<double>& numbers);
+
+void print_result(const std::string& message, double result);
+bool is_command(const std::string& givenCommand, const std::string& wantedCommand);
+bool requests_help(const std::string& givenCommand);
+
 #endif
