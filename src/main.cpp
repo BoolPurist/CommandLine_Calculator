@@ -7,7 +7,7 @@
 
 int main(int argc, char** argv)
 {
-  bool noUserInLineArguments = argc < 3;
+  bool noUserInLineArguments = argc <= 1;
 
   std::string enteredCommand{};
   std::vector<std::string> arguments{};
