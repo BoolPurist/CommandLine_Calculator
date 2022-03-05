@@ -18,6 +18,7 @@ ARGS=min 1 3 3 6 7 8 9
 ARGS2=  median 4.78 2.5 5.45
 ARGSN:=
 ARGH:=-h
+ARG1M:=median a
 
 .PHONY: build
 
@@ -39,7 +40,7 @@ $(HELP): $(SRC)help.cpp $(INC)/help.hpp
 	$(CC) $(CCF) -c $< -o $@
 
 run:
-	$(EX) $(ARGH)
+	$(EX) $(ARG1M)
 
 deploy: build serve
 

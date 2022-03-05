@@ -59,6 +59,13 @@ int main(int argc, char** argv)
 
     // Removes command so only the given numbers are contained.
     arguments.erase(arguments.begin());
+
+    if (arguments.size() == 0)
+    {
+      std::cout << "no numbers given !" << std::endl;
+      return -1;
+    }
+
   }
   
   // Numbers are processed according to a given valid command.
