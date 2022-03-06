@@ -61,8 +61,7 @@ namespace process
       }
       catch (std::invalid_argument &exception)
       {
-        std::cout << "value (" << toCreateFrom.at(i) << ") is not number" << std::endl;
-        throw exception;
+        throw std::invalid_argument(toCreateFrom.at(i));
       }
     }
 

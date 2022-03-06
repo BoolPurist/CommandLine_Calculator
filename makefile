@@ -18,7 +18,7 @@ ARGS=min 1 3 3 6 7 8 9
 ARGS2=  median 4.78 2.5 5.45
 ARGSN:=
 ARGH:=-h
-ARG1M:=median a
+ARG1M:=median 2 abc 4
 
 .PHONY: build
 

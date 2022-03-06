@@ -63,14 +63,24 @@ int main(int argc, char** argv)
     if (arguments.size() == 0)
     {
       std::cout << "no numbers given !" << std::endl;
-      return -1;
+      return 0;
     }
 
   }
   
   // Numbers are processed according to a given valid command.
   process::convert_comma_to_point(arguments);
-  std::vector<double> parsedNumbers = process::create_numbers_from(arguments);
+  std::vector<double> parsedNumbers{};
+
+  try
+  {
+    parsedNumbers = process::create_numbers_from(arguments);
+  }
+  catch(const std::invalid_argument& error)
+  {
+    std::cout << "Argument (" << error.what() << ") is not a valid number." << std::endl;
+    return 0;
+  }
 
   process::process_arguments_and_print_result(enteredCommand, parsedNumbers);    
 
